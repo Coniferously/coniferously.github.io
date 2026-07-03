@@ -1,0 +1,164 @@
+<!DOCTYPE HTML>
+<html>
+	<head>
+		<title>Custom STM32 Development Board - Portfolio</title>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+		<link rel="stylesheet" href="../../assets/css/main.css" />
+		<noscript><link rel="stylesheet" href="../../assets/css/noscript.css" /></noscript>
+		
+		<script type="module" src="https://ajax.googleapis.com/ajax/libs/model-viewer/3.1.1/model-viewer.min.js"></script>
+	</head>
+	<body class="no-sidebar is-preload">
+		<div id="page-wrapper">
+
+			<div id="header">
+					<div class="inner">
+							<header>
+								<h1><a href="../../index.html" id="logo">My Portfolio</a></h1>
+							</header>
+						</div>
+
+					<nav id="nav">
+							<ul>
+								<li><a href="../../index.html">Home / Bio</a></li>
+								<li><a href="../index.html">Projects</a></li>
+								<li><a href="../../resume.pdf" target="_blank">Resume</a></li>
+							</ul>
+						</nav>
+				</div>
+
+			<div class="wrapper style1">
+					<div class="container">
+						<article id="main" class="special">
+							
+							<header>
+								<h2>Custom STM32 Microcontroller Development Board</h2>
+								<p>4-Layer mixed-signal architecture for rapid sensor testing</p>
+							</header>
+							
+							<section style="margin-bottom: 3em; text-align: center;">
+								<a href="STM32F7%20Project.png" target="_blank" class="image featured">
+									<img src="STM32F7%20Project.png" alt="System Block Diagram" style="border: 1px solid #ddd; border-radius: 4px; background-color: #fff;"/>
+								</a>
+								<p style="font-size: 0.9em; color: #888;">Click diagram to expand</p>
+							</section>
+
+							<hr />
+
+							<div class="row" style="margin-top: 3em;">
+								
+								<div class="col-7 col-12-mobile" style="text-align: left;">
+									<section style="margin-bottom: 2em;">
+										<h3>The Objective</h3>
+										<p>Commercial off-the-shelf development boards are costly and often misaligned with the team's specific system architecture. This custom 4-layer board was designed to maximize GPIO access while integrating Arduino shield compatibility. This cross-compatibility enabled rapid sensor testing, knowledge transfer, and firmware development well before the final custom sensor PCBs were manufactured.</p>
+									</section>
+									
+									<section style="margin-bottom: 2em;">
+										<h3>System Architecture</h3>
+										<p>The architecture transitioned from the team's legacy STM32F1 microcontrollers to the high-performance STM32F7 series. This upgrade provided the necessary pin density for current requirements while future-proofing the design with hardware Ethernet support for subsequent development cycles. To maintain strict budget controls and consolidate the team's Bill of Materials (BOM), the power delivery network and passive components were standardized using JLCPCB’s basic component library, eliminating extended placement fees while maintaining >80% power conversion efficiency.</p>
+									</section>
+									
+									<section style="margin-bottom: 2em;">
+										<h3>Design Rationale & Challenges</h3>
+										<p>Routing a dense, full-pinout development board required strict adherence to signal integrity principles. To prevent high-frequency ripple from coupling into sensitive communication lines, the USB 2.0 and CAN differential pairs were strategically routed on the opposite side of the MCU relative to the high-speed oscillator. Navigating the impedance-matched USB lines presented a significant spatial challenge; the required trace width was thicker than the CAN traces, complicating routing through tight clearances while attempting to minimize overall trace length.</p>
+										<p>Conversely, CAN bus routing was highly optimized through the strategic placement of transceivers near the board edge. During initial assembly, mechanical stress on a GPIO pin sheared a copper barrel and its associated trace. The connection was successfully restored via a bodge wire, ensuring full board functionality and demonstrating practical hardware rework capabilities.</p>
+									</section>
+									
+									<section>
+										<h3>Outcome & Validation</h3>
+										<p>The board successfully served as the primary hardware testing platform for the electrical sub-team. Core clock functionality and thermal stability were functionally validated across various environmental states, ensuring the MCU maintained reliable execution timing for downstream data acquisition tasks.</p>
+									</section>
+								</div>
+
+								<div class="col-5 col-12-mobile">
+									
+									<section style="margin-bottom: 2.5em;">
+										<h4>Power Delivery Network</h4>
+										<a href="Power-1.png" target="_blank" class="image fit">
+											<img src="Power-1.png" alt="Power Delivery Schematic snippet" style="border: 1px solid #ddd; background-color: #fff; padding: 5px;"/>
+										</a>
+										<p style="font-size: 0.85em; text-align: center; color: #888; margin-top: 0.5em;">Click to view full resolution</p>
+									</section>
+
+									<section style="margin-bottom: 2.5em;">
+										<h4>MCU & Differential Interfaces</h4>
+										<a href="STMBlock-1.png" target="_blank" class="image fit">
+											<img src="STMBlock-1.png" alt="MCU Routing Schematic snippet" style="border: 1px solid #ddd; background-color: #fff; padding: 5px;"/>
+										</a>
+										<p style="font-size: 0.85em; text-align: center; color: #888; margin-top: 0.5em;">Click to view full resolution</p>
+									</section>
+
+									<section>
+										<h4>Board Routing</h4>
+										<a href="Board-1.png" target="_blank" class="image fit">
+											<img src="Board-1.png" alt="Board routing snippet" style="border: 1px solid #ddd; background-color: #fff; padding: 5px;"/>
+										</a>
+										<p style="font-size: 0.85em; text-align: center; color: #888; margin-top: 0.5em;">Click to view full resolution</p>
+									</section>
+									
+								</div>
+							</div>
+
+							<hr style="margin: 3em 0;" />
+
+							<section>
+								<header style="text-align: center;">
+									<h3>Interactive PCB Hardware</h3>
+									<p>Click, drag, and zoom to inspect the board routing and component placement.</p>
+								</header>
+								<div class="model-container" style="width: 100%; height: 600px; background-color: #2a2a2a; border-radius: 8px; overflow: hidden; margin-top: 1.5em; border: 1px solid #111;">
+									<model-viewer 
+										src="pcb.glb" 
+										alt="3D model of the STM32 PCB" 
+										auto-rotate 
+										camera-controls 
+										shadow-intensity="1"
+										style="width: 100%; height: 100%;">
+									</model-viewer>
+								</div>
+							</section>
+
+						</article>
+					</div>
+				</div>
+
+			<div id="footer">
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+
+                <section class="contact">
+                        <header>
+                            <h3>Let's Connect</h3>
+                        </header>
+                        <p>I am actively seeking hardware engineering and IC design opportunities. Feel free to reach out.</p>
+                        <ul class="icons">
+                            <li><a href="https://www.linkedin.com/in/conor-schehl/" target="_blank" class="icon brands fa-linkedin-in"><span class="label">Linkedin</span></a></li>
+                            <li><a href="mailto:schehljc@gmail.com" class="icon solid fa-envelope"><span class="label">Email</span></a></li>
+                            <li><a href="../../ConorSchehlResume.pdf" target="_blank" class="icon solid fa-file-pdf"><span class="label">Resume</span></a></li>
+                        </ul>
+                    </section>
+
+                <div class="copyright">
+                        <ul class="menu">
+                            <li>&copy; Conor Schehl. All rights reserved.</li><li>Design: <a href="http://html5up.net" target="_blank">HTML5 UP</a></li>
+                        </ul>
+                    </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+		<script src="../../assets/js/jquery.min.js"></script>
+			<script src="../../assets/js/jquery.dropotron.min.js"></script>
+			<script src="../../assets/js/jquery.scrolly.min.js"></script>
+			<script src="../../assets/js/jquery.scrollex.min.js"></script>
+			<script src="../../assets/js/browser.min.js"></script>
+			<script src="../../assets/js/breakpoints.min.js"></script>
+			<script src="../../assets/js/util.js"></script>
+			<script src="../../assets/js/main.js"></script>
+
+	</body>
+</html>
