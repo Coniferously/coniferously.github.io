@@ -1,0 +1,166 @@
+<!DOCTYPE HTML>
+<html>
+	<head>
+		<title>Thermocoupole Reading Device DAQ - Portfolio</title>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+		<link rel="stylesheet" href="../../assets/css/main.css" />
+		<noscript><link rel="stylesheet" href="../../assets/css/noscript.css" /></noscript>
+		
+		<script type="module" src="https://ajax.googleapis.com/ajax/libs/model-viewer/3.1.1/model-viewer.min.js"></script>
+	</head>
+	<body class="no-sidebar is-preload">
+		<div id="page-wrapper">
+
+			<div id="header">
+					<div class="inner">
+							<header>
+								<h1><a href="../" id="logo">My Portfolio</a></h1>
+							</header>
+						</div>
+
+					<nav id="nav">
+							<ul>
+								<li><a href="../../">Home / Bio</a></li>
+								<li><a href="../">Projects</a></li>
+								<li><a href="../../ConorSchehlResume.pdf" target="_blank">Resume</a></li>
+							</ul>
+						</nav>
+				</div>
+
+			<div class="wrapper style1">
+					<div class="container">
+						<article id="main" class="special">
+							
+							<header>
+								<h2>Dual-Stage Thermocouple DAQ</h2>
+								<p>My first custom mixed-signal board, used for high-precision temperature measurement</p>
+							</header>
+							
+							
+
+							<div class="row" style="margin-top: 3em;">
+								
+								<div class="col-7 col-12-mobile" style="text-align: left;">
+									<section style="margin-bottom: 2em;">
+										<h3>The Objective</h3>
+										<p>On the Mines Formula SAE team, we do everything custom. This includes custom carbon fiber ovens. This 2-layer PCB is a highly accurate analog front-end board for temperature sensing of said ovens. It conditions microvolt-level thermocouple signals, providing a robust, stable voltage to the STM32 MCU to collect, store, and relay the data. This was the first board I made, which was also super exciting.</p>
+									</section>
+									
+									<section style="margin-bottom: 2em;">
+										<h3>System Architecture</h3>
+										<p>In the analog domain, the foundation of the architecture is the INA2332 dual-stage instrumentation amplifier. Cold Junction Compensation (CJC) is achieved using an MCP9700 analog temperature sensor IC. The conditioned signal is then digitized by the STM32.</p>
+									</section>
+									
+									<section style="margin-bottom: 2em;">
+										<h3>Design Rationale & Challenges</h3>
+										<p>Thermocouple signals are highly susceptible to electromagnetic interference. The biggest challenge for this board despite having a sensitive USB 2.0 differential pair signal, was protecting the fragile thermocouple signal path. Any noise picked up in the path is filtered using a capacitive network before the first amplifier stage.</p>
+										<p>Instead of using software offsets, the design uses the MCP9700 to get an ambient temperature reference. This voltage is then scaled with a resistor divider and injected into the INA’s feedback network, applying CJC at the hardware level. After the first stage, the signal passes through heavy (200kΩ/22µF) low-pass filtering to eliminate low-frequency noise. Because the filter is at such high impedance, the signal is then amplified through the second stage of the INA in order to prevent the signal from collapsing under the STM32’s ADC load. The second stage of the INA acts as an isolation buffer to drive the ADC.</p>
+									</section>
+									
+									<section>
+										<h3>Outcome & Validation</h3>
+										<p>Granted this was my first board, there were lots of mistakes along the way and lots of input and reviews from senior members. Even with all the review, the legacy style INA and schematic proved to be quite confusing and there are improvements on the amplification input stage to be made, especially with the capacitor network and biasing of the amplifier. From my understanding, a broad simplification of the issues is that the input capacitors are incorrectly tied to separate voltage references. This means the ripple and noise is different on each line ruining the common mode rejection ratio. Furthermore, the inputs aren’t connected to ground through a pulldown, so the bias return path is floating when the capacitors fully charge. Otherwise, the CJC and filtering designs prove to prevent external EMI from entering the temperature measurement and provide an accurate temperature to the STM32 to be interpreted without complicated software-level smoothing.</p>
+									</section>
+
+									<section style="margin-top: 3em; background-color: rgba(32, 201, 151, 0.05); padding: 1.5em; border-left: 4px solid #20c997; border-radius: 4px;">
+										<h3 style="margin-bottom: 0.5em;">Technical Specifications</h3>
+										<ul style="list-style: none; padding-left: 0; font-size: 0.9em; margin-bottom: 0;">
+											<li style="margin-bottom: 0.5em;"><strong>Core Component:</strong> INA2332 (Dual-Stage Instrumentation Amplifier)</li>
+											<li style="margin-bottom: 0.5em;"><strong>Architecture:</strong> 2-layer mixed-signal with cold junction compensation</li>
+											<li style="margin-bottom: 0.5em;"><strong>Interfaces:</strong> USB 2.0, UART, Thermocouple</li>
+											<li style="margin-bottom: 0;"><strong>Tools Used:</strong> Altium Designer, JLCPCB, STM32CubeMX, SolidWorks</li>
+										</ul>
+									</section>
+								</div>
+
+								<div class="col-5 col-12-mobile">
+									<section style="margin-bottom: 2.5em;">
+        								<h4>Amplification Input Stage</h4>
+        								<a href="Amp-1.png" target="_blank" class="image fit">
+            								<img src="Amp-1.png" alt="Amplification Input Stage" style="border: 1px solid #ddd; background-color: #fff; padding: 5px; border-radius: 4px;"/>
+        								</a>
+        								<p style="font-size: 0.85em; text-align: center; color: #888; margin-top: 0.5em;">Click to view full resolution</p>
+    								</section>
+
+									<section style="margin-bottom: 2.5em;">
+										<h4>MCU</h4>
+										<a href="STM-1.png" target="_blank" class="image fit">
+											<img src="STM-1.png" alt="MCU Routing Schematic snippet" style="border: 1px solid #ddd; background-color: #fff; padding: 5px;"/>
+										</a>
+										<p style="font-size: 0.85em; text-align: center; color: #888; margin-top: 0.5em;">Click to view full resolution</p>
+									</section>
+
+									<section>
+										<h4>Board Routing</h4>
+										<a href="Pcb-1.png" target="_blank" class="image fit">
+											<img src="Pcb-1.png" alt="Board routing snippet" style="border: 1px solid #ddd; background-color: #fff; padding: 5px;"/>
+										</a>
+										<p style="font-size: 0.85em; text-align: center; color: #888; margin-top: 0.5em;">Click to view full resolution</p>
+									</section>
+									
+								</div>
+							</div>
+
+							<hr style="margin: 3em 0;" />
+
+							<section>
+								<header style="text-align: center;">
+									<h3>Interactive PCB Hardware</h3>
+									<p>Click, drag, and zoom, or tap, two finger drag, and pinch (mobile) <br>to inspect board routing and component placement</p>
+								</header>
+								<div class="model-container" style="width: 100%; height: 600px; background-color: #2a2a2a; border-radius: 8px; overflow: hidden; margin-top: 1.5em; border: 1px solid #111;">
+									<model-viewer 
+										src="trd.glb" 
+										alt="3D model of the TRD1 PCB" 
+										auto-rotate 
+										camera-controls 
+										shadow-intensity="1"
+										style="width: 100%; height: 100%;">
+									</model-viewer>
+								</div>
+							</section>
+
+						</article>
+					</div>
+				</div>
+
+			<div id="footer">
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+
+                <section class="contact">
+                        <header>
+                            <h3>Let's Connect</h3>
+                        </header>
+                        <p>I am actively seeking hardware engineering and IC design opportunities. Feel free to reach out.</p>
+                        <ul class="icons">
+                            <li><a href="https://www.linkedin.com/in/conor-schehl/" target="_blank" class="icon brands fa-linkedin-in"><span class="label">Linkedin</span></a></li>
+                            <li><a href="mailto:schehljc@gmail.com" class="icon solid fa-envelope"><span class="label">Email</span></a></li>
+                            <li><a href="../../ConorSchehlResume.pdf" target="_blank" class="icon solid fa-file-pdf"><span class="label">Resume</span></a></li>
+                        </ul>
+                    </section>
+
+                <div class="copyright">
+                        <ul class="menu">
+                            <li>&copy; Conor Schehl. All rights reserved.</li><li>Design: <a href="http://html5up.net" target="_blank">HTML5 UP</a></li>
+                        </ul>
+                    </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+		<script src="../../assets/js/jquery.min.js"></script>
+			<script src="../../assets/js/jquery.dropotron.min.js"></script>
+			<script src="../../assets/js/jquery.scrolly.min.js"></script>
+			<script src="../../assets/js/jquery.scrollex.min.js"></script>
+			<script src="../../assets/js/browser.min.js"></script>
+			<script src="../../assets/js/breakpoints.min.js"></script>
+			<script src="../../assets/js/util.js"></script>
+			<script src="../../assets/js/main.js"></script>
+
+	</body>
+</html>

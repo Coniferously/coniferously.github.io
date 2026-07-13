@@ -1,7 +1,7 @@
 <!DOCTYPE HTML>
 <html>
 	<head>
-		<title>Custom STM32 Development Board - Portfolio</title>
+		<title>Thermocoupole Reading Device DAQ - Portfolio</title>
 		<meta charset="utf-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
 		<link rel="stylesheet" href="../../assets/css/main.css" />
@@ -33,8 +33,8 @@
 						<article id="main" class="special">
 							
 							<header>
-								<h2>Custom STM32 Development Board</h2>
-								<p>4-Layer mixed-signal architecture for rapid sensor testing</p>
+								<h2>RP2040 Thermal Imaging PCB</h2>
+								<p>Credit-card sized thermal camera with QSPI flash and custom LiPo Battery Management System</p>
 							</header>
 							
 							
@@ -44,66 +44,62 @@
 								<div class="col-7 col-12-mobile" style="text-align: left;">
 									<section style="margin-bottom: 2em;">
 										<h3>The Objective</h3>
-										<p>Off-the-shelf development boards are expensive and misaligned with the team’s specific STM32 MCU architecture. This custom 4-layer board maximizes GPIO access while bringing out the specific pins to be compatible with Arduino Shields. The cross-compatible nature allows for quick sensor testing, embedded knowledge transfer, and firmware development before the final data acquisition boards are manufactured.</p>
+										<p>When I was between hardware projects for Formula, I decided to take on my own project. This project allowed me to explore discrete microcontroller architecture and construct on-board power management. My goal was to build a portable thermal camera without using premade modules or breakout boards. The idea was to get more experience in areas I hadn’t worked on with the team as well as make something practical that may assist with hardware testing in the future.</p>
 									</section>
 									
 									<section style="margin-bottom: 2em;">
 										<h3>System Architecture</h3>
-										<p>The architecture serves to transition the team from STM32F1 microcontrollers to a higher performance STM32F7 series or similar MCUs with ethernet capability. The upgrade provided the necessary pin density for the current requirements while having plenty of bandwidth for future hardware design improvements, the biggest of which will be Ethernet capability. To maintain budget controls and consolidate the Bill of Materials (BOM), passive components and power delivery components were standardized using JLCPCB’s basic component library, eliminating extended part placement fees while maintaining >80% power conversion efficiency.</p>
+										<p>The imager is an MLX90640. The data from the sensor is processed by an RP2040 microcontroller. This MCU lacks internal flash memory, so an external QSPI Flash chip was placed for program storage. To make the camera more portable, a custom LiPo Battery Management System was designed. This system allowed direct power delivery via USB-C which would charge the battery, and power the device.</p>
 									</section>
 									
 									<section style="margin-bottom: 2em;">
 										<h3>Design Rationale & Challenges</h3>
-										<p>Routing a dense, full-pinout development board required strict adherence to signal integrity principles. To prevent high-frequency ripple from coupling into communication lines, (like USB 2.0 and CAN) differential pairs were strategically routed on the opposite of the MCU, opposite the high-speed oscillator. The impedance-matched USB lines proved spatial and navigation challenges. The trance width was thicker than the CAN traces which meant routing through tight clearances while trying to minimize the length required some strategic rerouting and component placement. Conversely, CAN bus routing was made relatively easier by placing transceivers near the edge of the board.</p>
-										<p>The final challenge came during the board assembly process. A GPIO pin when being placed into the board sheared a copper barrel that’s placed in PCB holes for conductivity, and attachment. This shear ripped up the trace that the barrel was attached to.  The connection was restored with a hand soldered bodge wire. Everything proceeded to work as expected when testing conductivity signal integrity through the bodge wire.</p>
+										<p>The main challenge was developing the device in such a way to stay mobile, thus, power path efficiency was critical. To prevent the system from constantly charging and draining the LiPo battery, a load-sharing circuit was implemented with a P-Channel MOSFET. This allowed for seamless power transitions between the battery and the USB-C power, keeping the battery healthy increasing its lifetime use. Another challenge was getting the credit-card-sized footprint. This required planning, measuring, and clever component placement and routing to ensure sensitive data lines weren’t crossed, everything was stable, and components were thermally sound.</p>
 									</section>
 									
 									<section>
 										<h3>Outcome & Validation</h3>
-										<p>The board successfully served as the primary hardware testing platform for the electrical and software subsystems. This allowed new members to quickly learn embedded firmware, as well as get hands-on experience programming, testing sensors, and getting comfortable with the team’s electrical infrastructure. Clock functionality and thermal stability were validated in multiple environmental states using test code, multimeters, and oscilloscopes, ensuring the MCU maintained reliable timing for data acquisition tasks.</p>
+										<p>While this board has yet to be ordered and constructed, simulations make me confident in the design, especially around load sharing and power management. Furthermore, I was satisfied with the experience gained with routing a QSPI Flash module as well as engineering my own load sharing circuit.</p>
 									</section>
 
 									<section style="margin-top: 3em; background-color: rgba(32, 201, 151, 0.05); padding: 1.5em; border-left: 4px solid #20c997; border-radius: 4px;">
 										<h3 style="margin-bottom: 0.5em;">Technical Specifications</h3>
 										<ul style="list-style: none; padding-left: 0; font-size: 0.9em; margin-bottom: 0;">
-											<li style="margin-bottom: 0.5em;"><strong>Core MCU:</strong> STM32F7 (ARM Cortex-M7)</li>
-											<li style="margin-bottom: 0.5em;"><strong>Architecture:</strong> 4-Layer Mixed Signal</li>
-											<li style="margin-bottom: 0.5em;"><strong>Interfaces:</strong> CAN, USB 2.0, SPI/I2C/UART</li>
-											<li style="margin-bottom: 0;"><strong>Tools Used:</strong> Altium Designer, JLCPCB, STM32CubeMX, SolidWorks</li>
+											<li style="margin-bottom: 0.5em;"><strong>Core MCU:</strong> RP2040</li>
+											<li style="margin-bottom: 0.5em;"><strong>Architecture:</strong> Custom LiPo Battery Management System, and QSPI Flash Storage</li>
+											<li style="margin-bottom: 0.5em;"><strong>Interfaces:</strong> USB 2.0, SPI/I2C, MLX90640</li>
+											<li style="margin-bottom: 0;"><strong>Tools Used:</strong> Altium Designer, JLCPCB, Raspberry Pi Pip Assets</li>
 										</ul>
 									</section>
 								</div>
 
 								<div class="col-5 col-12-mobile">
 									<section style="margin-bottom: 2.5em;">
-        								<h4>System Block Diagram</h4>
-        								<a href="STM32F7%20Project.png" target="_blank" class="image fit">
-            								<img src="STM32F7%20Project.png" alt="System Block Diagram" style="border: 1px solid #ddd; background-color: #fff; padding: 5px; border-radius: 4px;"/>
+        								<h4>Custom Battery Management System</h4>
+        								<a href="Power-1.png" target="_blank" class="image fit">
+            								<img src="Power-1.png" alt="Custom Battery Management System" style="border: 1px solid #ddd; background-color: #fff; padding: 5px; border-radius: 4px;"/>
         								</a>
         								<p style="font-size: 0.85em; text-align: center; color: #888; margin-top: 0.5em;">Click to view full resolution</p>
     								</section>
 
 									<section style="margin-bottom: 2.5em;">
-										<h4>Power Delivery Network</h4>
-										<a href="Power-1.png" target="_blank" class="image fit">
-											<img src="Power-1.png" alt="Power Delivery Schematic snippet" style="border: 1px solid #ddd; background-color: #fff; padding: 5px;"/>
-										</a>
-										<p style="font-size: 0.85em; text-align: center; color: #888; margin-top: 0.5em;">Click to view full resolution</p>
-									</section>
-
-									<section style="margin-bottom: 2.5em;">
-										<h4>MCU & Differential Interfaces</h4>
-										<a href="STMBlock-1.png" target="_blank" class="image fit">
-											<img src="STMBlock-1.png" alt="MCU Routing Schematic snippet" style="border: 1px solid #ddd; background-color: #fff; padding: 5px;"/>
+										<h4>RP2040 and QSPI Flash</h4>
+										<a href="RP2040 and Flash-1.png" target="_blank" class="image fit">
+											<img src="RP2040 and Flash-1.png" alt="RP2040 and QSPI Flash Schematic" style="border: 1px solid #ddd; background-color: #fff; padding: 5px;"/>
 										</a>
 										<p style="font-size: 0.85em; text-align: center; color: #888; margin-top: 0.5em;">Click to view full resolution</p>
 									</section>
 
 									<section>
 										<h4>Board Routing</h4>
-										<a href="Board-1.png" target="_blank" class="image fit">
-											<img src="Board-1.png" alt="Board routing snippet" style="border: 1px solid #ddd; background-color: #fff; padding: 5px;"/>
-										</a>
+                                        <a class="image featured" style="display: block; text-decoration: none;">
+                                            <div style="width: 100%; height: 250px; background: linear-gradient(135deg, #020c1b, #0a192f); display: flex; align-items: center; justify-content: center; border: 1px solid rgba(32, 201, 151, 0.3); border-radius: 4px; transition: border 0.3s ease;">
+                                                <span style="color: #20c997; font-family: monospace; font-size: 0.9em; letter-spacing: 1px;">[ Board routing pending export ]</span>
+                                            </div>
+                                        <!-- </a>
+										<a href="Pcb-1.png" target="_blank" class="image fit">
+											<img src="Pcb-1.png" alt="Board routing snippet" style="border: 1px solid #ddd; background-color: #fff; padding: 5px;"/>
+										</a> -->
 										<p style="font-size: 0.85em; text-align: center; color: #888; margin-top: 0.5em;">Click to view full resolution</p>
 									</section>
 									
@@ -118,14 +114,15 @@
 									<p>Click, drag, and zoom, or tap, two finger drag, and pinch (mobile) <br>to inspect board routing and component placement</p>
 								</header>
 								<div class="model-container" style="width: 100%; height: 600px; background-color: #2a2a2a; border-radius: 8px; overflow: hidden; margin-top: 1.5em; border: 1px solid #111;">
-									<model-viewer 
-										src="pcb.glb" 
-										alt="3D model of the STM32 PCB" 
+									<p style="color: #20c997; font-family: monospace; margin: 0; font-size: 1.1em;">> Interactive 3D .glb model pending export_</p>
+                                    <!-- <model-viewer 
+										src="trd.glb" 
+										alt="3D model of the TRD1 PCB" 
 										auto-rotate 
 										camera-controls 
 										shadow-intensity="1"
 										style="width: 100%; height: 100%;">
-									</model-viewer>
+									</model-viewer> -->
 								</div>
 							</section>
 
