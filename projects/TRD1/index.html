@@ -137,9 +137,20 @@
                         <p>I am actively seeking hardware engineering and IC design opportunities. Feel free to reach out.</p>
                         <ul class="icons">
                             <li><a href="https://www.linkedin.com/in/conor-schehl/" target="_blank" class="icon brands fa-linkedin-in"><span class="label">Linkedin</span></a></li>
-                            <li><a href="mailto:schehljc@gmail.com" class="icon solid fa-envelope"><span class="label">Email</span></a></li>
+                            <li><a href="#" id="safe-email-link" class="icon solid fa-envelope"><span class="label">Email</span></a></li>
                             <li><a href="../../ConorSchehlResume.pdf" target="_blank" class="icon solid fa-file-pdf"><span class="label">Resume</span></a></li>
                         </ul>
+
+						<script>
+						const user = 'schehljc';
+						const domain = 'gmail.com';
+						
+						document.getElementById('safe-email-link').addEventListener('click', function(e) {
+							e.preventDefault();
+							window.location.href = 'mailto:' + user + '@' + domain;
+						});
+						</script>
+
                     </section>
 
                 <div class="copyright">
