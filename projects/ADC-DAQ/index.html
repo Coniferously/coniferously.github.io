@@ -49,7 +49,7 @@
 									
 									<section style="margin-bottom: 2em;">
 										<h3>System Architecture</h3>
-										<p>The architecture is based on an STM32 microcontroller and a 16bit ADC, the ADS114SO8B. This ADC was chosen to optimize the Bill of Materials cost while providing all of the necessary features to alleviate previous complaints. This ADC comes with a fast enough sampling speed and an internal Programmable Gain Amplifier (PGA) to increase flexibility, variability, and reliability, as different types of analog inputs go into it. Communication with the rest of the car is driven through a 100Base-T Ethernet PHY using RMII with two MDI channels. Because RJ45 connectors lack the robustness required for automotive environments, the channels are routed through our standard AMPSEAL connector.</p>
+										<p>The architecture is based on an STM32 microcontroller and a 16bit ADC, the ADS114SO8B. This ADC was chosen to optimize the Bill of Materials cost while providing all of the necessary features to alleviate previous complaints. This ADC comes with a fast enough sampling speed and an internal Programmable Gain Amplifier (PGA) to increase flexibility, variability, and reliability, as different types of analog inputs go into it. Communication with the rest of the car is driven through a 100Base-TX Ethernet PHY using RMII with two MDI channels. Because RJ45 connectors lack the robustness required for automotive environments, the channels are routed through our standard AMPSEAL connector.</p>
 									</section>
 									
 									<section style="margin-bottom: 2em;">
@@ -68,15 +68,29 @@
 										<h3 style="margin-bottom: 0.5em;">Technical Specifications</h3>
 										<ul style="list-style: none; padding-left: 0; font-size: 0.9em; margin-bottom: 0;">
 											<li style="margin-bottom: 0.5em;"><strong>Core MCU:</strong> STM32</li>
-											<li style="margin-bottom: 0.5em;"><strong>Architecture:</strong> ADS114SO8B ADC, 100Base-T Ethernet</li>
-											<li style="margin-bottom: 0.5em;"><strong>Interfaces:</strong> SPI, JTAG, 100Base-T Ethernet</li>
+											<li style="margin-bottom: 0.5em;"><strong>Architecture:</strong> ADS114SO8B ADC, 100Base-TX Ethernet</li>
+											<li style="margin-bottom: 0.5em;"><strong>Interfaces:</strong> SPI, JTAG, 100Base-TX Ethernet</li>
 											<li style="margin-bottom: 0;"><strong>Tools Used:</strong> Altium Designer, JLCPCB</li>
 										</ul>
 									</section>
 								</div>
 
 								<div class="col-5 col-12-mobile">
-									<section style="margin-bottom: 2.5em;">
+
+									<section>
+										<h4>Board Routing</h4>
+                                        <a>
+                                            <div style="width: 100%; height: 250px; background: linear-gradient(135deg, #020c1b, #0a192f); display: flex; align-items: center; justify-content: center; border: 1px solid rgba(32, 201, 151, 0.3); border-radius: 4px; transition: border 0.3s ease;">
+                                                <span style="color: #20c997; font-family: monospace; font-size: 0.9em; letter-spacing: 1px;">[ Board routing pending export ]</span>
+                                            </div>
+                                        </a>
+										<!-- <a href="Pcb-1.png" target="_blank" class="image fit">
+											<img src="Pcb-1.png" alt="Board routing snippet" style="border: 1px solid #ddd; background-color: #fff; padding: 5px;"/>
+										</a> -->
+										<p style="font-size: 0.85em; text-align: center; color: #888; margin-top: 0.5em;">Click to view full resolution</p>
+									</section>
+
+									<!-- <section style="margin-bottom: 2.5em;"> -->
         								<!-- <h4>System Architecture</h4>
         								<a href="Power-1.png" target="_blank" class="image fit">
             								<img src="Power-1.png" alt="Custom Battery Management System" style="border: 1px solid #ddd; background-color: #fff; padding: 5px; border-radius: 4px;"/>
@@ -152,19 +166,6 @@
                                         <a>
                                             <div style="width: 100%; height: 250px; background: linear-gradient(135deg, #020c1b, #0a192f); display: flex; align-items: center; justify-content: center; border: 1px solid rgba(32, 201, 151, 0.3); border-radius: 4px; transition: border 0.3s ease;">
                                                 <span style="color: #20c997; font-family: monospace; font-size: 0.9em; letter-spacing: 1px;">[ Power distribution schematic pending export ]</span>
-                                            </div>
-                                        </a>
-										<!-- <a href="Pcb-1.png" target="_blank" class="image fit">
-											<img src="Pcb-1.png" alt="Board routing snippet" style="border: 1px solid #ddd; background-color: #fff; padding: 5px;"/>
-										</a> -->
-										<p style="font-size: 0.85em; text-align: center; color: #888; margin-top: 0.5em;">Click to view full resolution</p>
-									</section>
-
-									<section>
-										<h4>Board Routing</h4>
-                                        <a>
-                                            <div style="width: 100%; height: 250px; background: linear-gradient(135deg, #020c1b, #0a192f); display: flex; align-items: center; justify-content: center; border: 1px solid rgba(32, 201, 151, 0.3); border-radius: 4px; transition: border 0.3s ease;">
-                                                <span style="color: #20c997; font-family: monospace; font-size: 0.9em; letter-spacing: 1px;">[ Board routing pending export ]</span>
                                             </div>
                                         </a>
 										<!-- <a href="Pcb-1.png" target="_blank" class="image fit">
