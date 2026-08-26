@@ -1,0 +1,195 @@
+<!DOCTYPE HTML>
+<html>
+	<head>
+		<title>Latching and Control Board - Portfolio</title>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+		<link rel="stylesheet" href="../../assets/css/main.css" />
+		<noscript><link rel="stylesheet" href="../../assets/css/noscript.css" /></noscript>
+		
+		<script type="module" src="https://ajax.googleapis.com/ajax/libs/model-viewer/3.1.1/model-viewer.min.js"></script>
+	</head>
+	<body class="no-sidebar is-preload">
+		<div id="page-wrapper">
+
+			<div id="header">
+					<div class="inner">
+							<header>
+								<h1><a href="../" id="logo">My Portfolio</a></h1>
+							</header>
+						</div>
+
+					<nav id="nav">
+							<ul>
+								<li><a href="../../">Home / Bio</a></li>
+								<li><a href="../">Projects</a></li>
+								<li><a href="../../ConorSchehlResume.pdf" target="_blank">Resume</a></li>
+							</ul>
+						</nav>
+				</div>
+
+			<div class="wrapper style1">
+					<div class="container">
+						<article id="main" class="special">
+							
+							<header>
+								<h2>Power and Safety Latching Circuit</h2>
+								<p>Takes various fault sensor inputs and provides latching functionality disabling the EV high voltage system <br>Controls status indicator lights for safety, communication, and rapid telemetry gathering</p>
+							</header>
+							
+							<section>
+								<header style="text-align: center;">
+									<h3>Interactive PCB Hardware</h3>
+									<p>Click, drag, and zoom, or tap, two finger drag, and pinch (mobile) <br>to inspect board routing and component placement</p>
+								</header>
+
+								<div class="model-container" style="width: 100%; height: 600px; background-color: #2a2a2a; border-radius: 8px; overflow: hidden; margin-top: 1.5em; border: 1px solid #111;">
+                                    <model-viewer 
+										src="ADC PCB.glb" 
+										alt="3D model of the ADC PCB" 
+										auto-rotate 
+										camera-controls 
+										shadow-intensity="1"
+										style="width: 100%; height: 100%;">
+									</model-viewer>
+								</div>
+							</section>
+
+							<div class="row" style="margin-top: 3em;">
+								
+								<div class="col-7 col-12-mobile" style="text-align: left;">
+									<section style="margin-bottom: 2em;">
+										<h3>The Objective</h3>
+										<p>In the past, we have struggled with getting readable data from the various analog sensors around the formula racecar. This board was designed to acquire and digitize analog telemetry at a high resolution to be saved and sent at a high speed to the Vehicle Control Unit (VCU). The aim is to fix previous issues surrounding signal integrity and lower resolution analog to digital conversions that we have dealt with in years prior. Midway into development, the scope of this board increased to have it also act as a small power distribution unit to reduce harness complexity.</p>
+									</section>
+									
+									<section style="margin-bottom: 2em;">
+										<h3>System Architecture</h3>
+										<p>The architecture is based on an STM32 microcontroller and a 16bit ADC, the ADS114SO8B. This ADC was chosen to optimize the Bill of Materials cost while providing all of the necessary features to alleviate previous complaints. This ADC comes with a fast enough sampling speed and an internal Programmable Gain Amplifier (PGA) to increase flexibility, variability, and reliability, as different types of analog inputs go into it. Communication with the rest of the car is driven through a 100Base-TX Ethernet PHY using RMII with two MDI channels. Because RJ45 connectors lack the robustness required for automotive environments, the channels are routed through our standard AMPSEAL connector.</p>
+									</section>
+									
+									<section style="margin-bottom: 2em;">
+										<h3>Design Rationale & Challenges</h3>
+										<p>Signal integrity required strict physical separation of the analog and digital sections of the PCB. Instead of physically splitting the ground plane and causing unpredictable return paths along with radiation emissions issues, one solid ground plane is used with careful routing of components over the top. The analog and digital power domains were isolated using the discrete Low-Dropout Regulators (LDOs). The traces that cross the boundary are only the SPI lines that communicate with the STM32 and the headers used with jumper wire in specific bench testing scenarios. By keeping few traces crossing the boundary analog inputs were able to get to their respective low-pass filters without risk of digital crosstalk.</p>
+										<p>Routing high-speed Ethernet differential pairs through an AMPSEAL connector instead of a standard RJ45 introduced its own set of challenges. Ethernet requires specific magnetics and length matching when going through long transmission wires. The solution to the magnetics issue was to have all hands help to design a discrete magnetics solution with an onboard transformer. Length matching was an issue to be tested later, and it was found that understanding the topology of an AMPSEAL, you can route the differential pairs alongside each other, and the signals are robust enough to maintain reliable communication.</p>
+										<p>Furthermore, the added requirement to supply external power to various sensors (analog and digital) introduced issues with thermal limitations when dealing with the power budgets. The solution for this was to use an LDO with low thermal resistance and ensure it properly sinks into the copper ground planes underneath with proper thermal relief vias.</p>
+									</section>
+									
+									<section>
+										<h3>Outcome & Validation</h3>
+										<p>The board successfully managed the thermal dissipation while providing highly stable power sources and voltage references for the analog sensors. The Ethernet solution maintained robust, continuous communication and also allowed for the self correcting protocols that Ethernet has in place to aid with design and manufacturing challenges despite the non-standard connector.</p>
+									</section>
+
+									<section style="margin-top: 3em; background-color: rgba(32, 201, 151, 0.05); padding: 1.5em; border-left: 4px solid #20c997; border-radius: 4px;">
+										<h3 style="margin-bottom: 0.5em;">Technical Specifications</h3>
+										<ul style="list-style: none; padding-left: 0; font-size: 0.9em; margin-bottom: 0;">
+											<li style="margin-bottom: 0.5em;"><strong>Core Components:</strong> Relays, Optocouplers</li>
+											<li style="margin-bottom: 0.5em;"><strong>Architecture:</strong> Latching and Control Circuit</li>
+											<li style="margin-bottom: 0.5em;"><strong>Interfaces:</strong> Fault Input Signals, Status Indicators</li>
+											<li style="margin-bottom: 0;"><strong>Tools Used:</strong> Altium Designer, JLCPCB, LTspice, SolidWorks</li>
+										</ul>
+									</section>
+								</div>
+
+								<div class="col-5 col-12-mobile">
+
+									<section>
+										<h4>Board Routing</h4>
+										<a href="ADC Routing-1.png" target="_blank" class="image fit">
+											<img src="ADC Routing-1.png" alt="Board routing snippet" style="border: 1px solid #ddd; background-color: #fff; padding: 5px;"/>
+										</a>
+										<p style="font-size: 0.85em; text-align: center; color: #888; margin-top: 0.5em;">Click to view full resolution</p>
+									</section>
+
+									<section style="margin-bottom: 2.5em;">
+        								<h4>System Architecture</h4>
+        								<a href="ADC Architecture Schematic-1.png" target="_blank" class="image fit">
+            								<img src="ADC Architecture Schematic-1.png" alt="Top Schematic and Architecture Diagram" style="border: 1px solid #ddd; background-color: #fff; padding: 5px; border-radius: 4px;"/>
+        								</a>
+        								<p style="font-size: 0.85em; text-align: center; color: #888; margin-top: 0.5em;">Click to view full resolution</p>
+    								</section>
+
+									<section style="margin-bottom: 2.5em;">
+										<h4>ADC</h4>
+										<a href="ADC Schematic-1.png" target="_blank" class="image fit">
+											<img src="ADC Schematic-1.png" alt="ADC Schematic" style="border: 1px solid #ddd; background-color: #fff; padding: 5px;"/>
+										</a>
+										<p style="font-size: 0.85em; text-align: center; color: #888; margin-top: 0.5em;">Click to view full resolution</p>
+									</section>
+
+									<section style="margin-bottom: 2.5em;">
+										<h4>Ethernet</h4>
+										<a href="ADC Ethernet-1.png" target="_blank" class="image fit">
+											<img src="ADC Ethernet-1.png" alt="Ethernet Schematic" style="border: 1px solid #ddd; background-color: #fff; padding: 5px;"/>
+										</a>
+										<p style="font-size: 0.85em; text-align: center; color: #888; margin-top: 0.5em;">Click to view full resolution</p>
+									</section>
+
+									<section style="margin-bottom: 2.5em;">
+										<h4>Power Distribution</h4>
+										<a href="ADC Power-1.png" target="_blank" class="image fit">
+											<img src="ADC Power-1.png" alt="Power Distribution Schematic" style="border: 1px solid #ddd; background-color: #fff; padding: 5px;"/>
+										</a>
+										<p style="font-size: 0.85em; text-align: center; color: #888; margin-top: 0.5em;">Click to view full resolution</p>
+									</section>
+									
+								</div>
+							</div>
+
+							<hr style="margin: 3em 0;" />
+
+							
+
+						</article>
+					</div>
+				</div>
+
+			<div id="footer">
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+
+                <section class="contact">
+                        <header>
+                            <h3>Let's Connect</h3>
+                        </header>
+                        <p>I am actively seeking hardware engineering and IC design opportunities. Feel free to reach out.</p>
+                        <ul class="icons">
+                            <li><a href="https://www.linkedin.com/in/conor-schehl/" target="_blank" class="icon brands fa-linkedin-in"><span class="label">Linkedin</span></a></li>
+                            <li><a href="#" id="safe-email-link" class="icon solid fa-envelope"><span class="label">Email</span></a></li>
+                            <li><a href="../../ConorSchehlResume.pdf" target="_blank" class="icon solid fa-file-pdf"><span class="label">Resume</span></a></li>
+                        </ul>
+
+						<script>
+						const user = 'schehljc';
+						const domain = 'gmail.com';
+						
+						document.getElementById('safe-email-link').addEventListener('click', function(e) {
+							e.preventDefault();
+							window.location.href = 'mailto:' + user + '@' + domain;
+						});
+						</script>
+						
+                    </section>
+
+                <div class="copyright">
+                        <ul class="menu">
+                            <li>&copy; Conor Schehl. All rights reserved.</li><li>Design: <a href="http://html5up.net" target="_blank">HTML5 UP</a></li>
+                        </ul>
+                    </div>
+
+            </div>
+        </div>
+</div>
+
+		<script src="../../assets/js/jquery.min.js"></script>
+			<script src="../../assets/js/jquery.dropotron.min.js"></script>
+			<script src="../../assets/js/jquery.scrolly.min.js"></script>
+			<script src="../../assets/js/jquery.scrollex.min.js"></script>
+			<script src="../../assets/js/browser.min.js"></script>
+			<script src="../../assets/js/breakpoints.min.js"></script>
+			<script src="../../assets/js/util.js"></script>
+			<script src="../../assets/js/main.js"></script>
+
+	</body>
+</html>
